@@ -1,4 +1,4 @@
-sudo: false
+sudo: required
 # Use node_js environnement
 language: node_js
 node_js:
