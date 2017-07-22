@@ -1,5 +1,5 @@
 
-## Installing loklak on Bluemix with Docker
+## Installing Yacy on Bluemix with Docker
 
 1. Install docker on your system
 
@@ -51,11 +51,11 @@ cf ic login   (No credentials are necessary of you logged in to bluemix before
    ```
 10. Init your docker connection with `cf ic init`
 
-11. Upload the Yacy docker file to your namespace with `cf ic cpi mariobehling/yacy yacy`   (takes some time)
+11. Upload the Yacy docker file to your namespace with `cf ic cpi nikhilrayaprolu/yacy_grid_mcp yacy_grid_mcp`   (takes some time)
 
 12. Create docker group with: (the XXXX must be unique, play around to found a free name)
    ```
-   cf ic group create --name yacy --auto --desired 2 -m 1024 -n XXXX -d mybluemix.net -p 80 registry.ng.bluemix.net/<namespace>/loklak
+   cf ic group create --name yacy --auto --desired 2 -m 1024 -n XXXX -d mybluemix.net -p 80 registry.ng.bluemix.net/<namespace>/yacy_grid_mcp
    ```
 13. Check if your group is running either with pressing Dashboard in the browser or:
    ```
@@ -63,6 +63,6 @@ cf ic login   (No credentials are necessary of you logged in to bluemix before
    ```
 14. Wait until your container group is build and the network is configured (>1 minute) and
    ```
-   check at https://XXXX.mybluemix.net is working with your version of loklak
+   check at https://XXXX.mybluemix.net is working with your version of yacy_grid_mcp
    ```
 
