@@ -9,11 +9,11 @@ This section shows you how to get such an image.
 Some possibilities may be used in the sections but you can may be able to exchange them.
 
 #### Pull a docker image
-Pull a docker image from [dockerhub](https://hub.docker.com/r/mariobehling/yacy/).
+Pull a docker image from [dockerhub](https://hub.docker.com/r/nikhilrayaprolu/yacy_grid_mcp/).
 
 Type this command in your terminal:
         ```
-        docker pull mariobehling/yacy
+        docker pull nikhilrayaprolu/yacy_grid_mcp
         ```
 
 #### Build a docker image on your local machine
