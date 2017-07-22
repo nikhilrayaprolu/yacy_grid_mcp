@@ -48,8 +48,8 @@
 
 14. Once docker is installed, we start our Yacy-server by entering:
 	```
-	sudo docker pull mariobehling/yacy
-	sudo docker run -d -p 80:80 -p 443:443 mariobehling/yacy:latest
+	sudo docker pull nikhilrayaprolu/yacy_grid_mcp
+	sudo docker run -d -p 8100:8100 -p 443:443 nikhilrayaprolu/yacy_grid_mcp:latest
 	```
 
 15. Check if Yacy is running on your server, by going to your public DNS, e.g.: ```ec2-54-169-103-75.ap-southeast-1.compute.amazonaws.com```.
