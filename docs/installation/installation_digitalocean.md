@@ -41,7 +41,7 @@
 
 6. OK, you're ready to run yacy:
    ```bash
-   docker run -d -p 80:80 -p 443:443 nikhilrayaprolu/yacy_grid_mcp:latest
+   docker run -d -p 8100:8100 -p 443:443 nikhilrayaprolu/yacy_grid_mcp:latest
    ```
 
 7. Go to your droplet IP using web browser. You should see yacy main page.
