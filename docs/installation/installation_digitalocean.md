@@ -34,14 +34,14 @@
     Built:        Fri Nov 20 13:12:04 UTC 2015
     OS/Arch:      linux/amd64
    ```
-5. Pull Docker image from [Yact repository](https://hub.docker.com/r/mariobehling/yacy/) in Docker Hub (it should take about a minute):
+5. Pull Docker image from [Yacy repository](https://hub.docker.com/r/nikhilrayaprolu/yacy_grid_mcp/) in Docker Hub (it should take about a minute):
    ```bash
-   docker pull mariobehling/yacy
+   docker pull nikhilrayaprolu/yacy_grid_mcp
    ```
 
 6. OK, you're ready to run yacy:
    ```bash
-   docker run -d -p 80:80 -p 443:443 mariobehling/yacy:latest
+   docker run -d -p 80:80 -p 443:443 nikhilrayaprolu/yacy_grid_mcp:latest
    ```
 
 7. Go to your droplet IP using web browser. You should see yacy main page.
