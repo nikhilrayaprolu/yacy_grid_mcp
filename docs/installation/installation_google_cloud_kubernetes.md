@@ -1,7 +1,7 @@
 ## Installing Yacy on Google Cloud with Docker
 
 
-1. Go to [Google Cloud Free Trial](https://cloud.google.com/free-trial/) and sign up. You will get 300 dollars credit for 3 months.
+1. Go to [Google Cloud Free Trial](https://cloud.google.com/free-trial/) and sign up. You will get 300 dollars credit for 12 months.
 
 
 2. Go to the console page: [Console](https://console.cloud.google.com/home)
@@ -36,12 +36,12 @@ sudo fallocate -l 4G /swapfile
 sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
-sudo docker pull mariobehling/yacy
+sudo docker pull nikhilrayaprolu/yacy_grid_mcp
 ```
 
 Once finished, you will get fully working image. You can check if it exists by entering ```sudo docker images```.
 Run our server by entering:
 ```
-sudo docker run -d -p 80:80 -p 443:443 mariobehling/yacy
+sudo docker run -d -p 8100:8100 -p 443:443 nikhilrayaprolu/yacy_grid_mcp
 ```
 Enter your assigned HTTP IP address into your browser to check if it is working.
