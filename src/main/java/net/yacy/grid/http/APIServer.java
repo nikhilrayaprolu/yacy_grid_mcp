@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- *  
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program in the file lgpl21.txt
  *  If not, see <http://www.gnu.org/licenses/>.
@@ -51,11 +51,11 @@ public class APIServer {
    private static List<Class<? extends Servlet>> services = new ArrayList<>();
    private static Map<String, APIHandler> serviceMap = new ConcurrentHashMap<>();
    private static Server server = null;
-    
+
     public static int getServerThreads() {
         return server.getThreadPool().getThreads() - server.getThreadPool().getIdleThreads();
     }
-    
+
     public static void addService(Class<? extends Servlet> service) {
         try {
             APIHandler handler = (APIHandler) service.newInstance();
@@ -65,7 +65,7 @@ public class APIServer {
             e.printStackTrace();
         }
     }
-    
+
     public static APIHandler getAPI(String name) {
         return serviceMap.get(name);
     }
@@ -86,22 +86,37 @@ public class APIServer {
             }
         }
     }
-    
+
     private static void open(int port, int expiresSeconds, String htmlPath) throws IOException {
         try {
             QueuedThreadPool pool = new QueuedThreadPool();
             pool.setMaxThreads(500);
             server = new Server(pool);
-    
+
             ServerConnector connector = new ServerConnector(server);
             HttpConfiguration http_config = new HttpConfiguration();
+            http_config.addCustomizer(new SecureRequestCustomizer());
+            http_config.setSecurePort(8443);
+            http_config.setSecureScheme("https");
             connector.addConnectionFactory(new HttpConnectionFactory(http_config));
             connector.setPort(port);
             connector.setName("httpd:" + port);
             connector.setIdleTimeout(20000); // timout in ms when no bytes send / received
-            server.addConnector(connector);
+            HttpConfiguration https = new HttpConfiguration();
+		        https.addCustomizer(new SecureRequestCustomizer());
+        		// Configuring SSL
+        		SslContextFactory sslContextFactory = new SslContextFactory();
+        		// Defining keystore path and passwords
+        		sslContextFactory.setKeyStorePath(EmbeddedJettyMain.class.getResource("keystore").toExternalForm());
+        		sslContextFactory.setKeyStorePassword("javacodegeeks");
+        		sslContextFactory.setKeyManagerPassword("javacodegeeks");
+            // Configuring the connector
+        		ServerConnector sslConnector = new ServerConnector(server, new SslConnectionFactory(sslContextFactory, "http/1.1"), new HttpConnectionFactory(https));
+        		sslConnector.setPort(8443);
+        		// Setting HTTP and HTTPS connectors
+        		server.setConnectors(new Connector[]{connector, sslConnector});
             server.setStopAtShutdown(true);
-    
+
             // add services
             ServletContextHandler servletHandler = new ServletContextHandler();
             for (Class<? extends Servlet> service: services)
@@ -111,7 +126,7 @@ public class APIServer {
                     Log.getLog().warn(service.getName() + " instantiation error", e);
                     e.printStackTrace();
                 }
-    
+
             ErrorHandler errorHandler = new ErrorHandler();
             errorHandler.setShowStacks(true);
             servletHandler.setErrorHandler(errorHandler);
@@ -132,7 +147,7 @@ public class APIServer {
             throw new IOException(e.getMessage());
         }
     }
-    
+
     public static void join() {
         try {
             server.join();
@@ -140,5 +155,5 @@ public class APIServer {
             e.printStackTrace();
         }
     }
-    
+
 }
